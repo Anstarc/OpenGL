@@ -1019,7 +1019,7 @@ void Mesh3D::gl_draw_wave(float xLength, float yLength, bool smooth)
 				GLfloat v[] = { edge->vert->normal[0], edge->vert->normal[1], edge->vert->normal[2] };
 				glNormal3fv(v);
 
-				glTexCoord2f((edge->vert->x+10) / xLength, (edge->vert->z+10) / yLength);
+				glTexCoord2f((edge->vert->x) / xLength + 0.5f, (edge->vert->z) / yLength + 0.5f);
 
 // 				switch (i)
 // 				{

@@ -15,6 +15,13 @@
 #endif
 
 
+
+#define PI 3.1415926536
+#define zDepth -10.0
+#define yDepth -0.2
+#define xWith 10.0
+#define STEP 0.5
+
 // CSubdivisionView
 
 IMPLEMENT_DYNCREATE(CSubdivisionView, CView)
@@ -1514,8 +1521,7 @@ void CSubdivisionView::OnTimer(UINT_PTR nIDEvent)
 		Mesh3D* m_pwave=new Mesh3D;
 
 		//Create Sea
-		float xLength, yLength;
-		OnCreateSea(m_pwave, time, &yLength, &xLength);
+		OnCreateSea(m_pwave, time);
 		time += 0.1;
 
 		//wglMakeCurrent(hDC,m_hGLContext);
@@ -1582,7 +1588,10 @@ void CSubdivisionView::OnTimer(UINT_PTR nIDEvent)
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glColor4f(1.0f, 1.0f, 1.0f, 0.7f);
 
-		m_pwave->gl_draw_wave(xLength,yLength,m_SmoothShading);
+		//º∆À„Ã˘Õº
+		float xLength = 2 * fabs(xWith);
+		float zLength = 2 * fabs(zDepth) + 1;
+		m_pwave->gl_draw_wave(xLength,zLength,m_SmoothShading);
 
 		glDisable(GL_BLEND);
 		glDisable(GL_TEXTURE_2D);
@@ -1608,32 +1617,19 @@ void CSubdivisionView::OnTimer(UINT_PTR nIDEvent)
 }
 
 
-#define PI 3.1415926536
-#define zDepth -10.0
-#define yDepth -0.2
-#define xWith 10.0
-#define STEP 0.5
 
-Mesh3D* CSubdivisionView::OnCreateSea(Mesh3D* m_pmesh, float a, float* zLength, float* xLength){
+Mesh3D* CSubdivisionView::OnCreateSea(Mesh3D* m_pmesh, float a){
 
 	float x, y, z;
 	HE_vert* vv;
 	HE_face* ff;
 	std::vector<int>  vert_id_list;
 	VERTEX_LIST  v_list;
-	
-	//º∆À„Ã˘Õº
-	*zLength = 0;
-	*xLength = 2 * fabs(xWith);
-	*zLength = 2 * fabs(zDepth);
-	float dy = 0,pre_y;
-	float step_2 = STEP*STEP;
 
 	for (x = -xWith; x <= xWith; x += STEP){
 		vv = m_pmesh->insert_vertex(x, yDepth + sin(a)*0.3, STEP - zDepth);
 		vert_id_list.push_back(vv->id);
 	}
-	pre_y = yDepth + sin(a)*0.3;
 
 
 	for (z = -zDepth / 2; z > zDepth; z -= STEP){
@@ -1662,8 +1658,6 @@ Mesh3D* CSubdivisionView::OnCreateSea(Mesh3D* m_pmesh, float a, float* zLength, 
 
 			v_list.clear();
 		}
-		dy = (y - pre_y);
-		//*zLength += sqrt(dy*dy + step_2);
 	}
 	vert_id_list.clear();
 	m_pmesh->update_mesh();

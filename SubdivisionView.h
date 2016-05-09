@@ -139,7 +139,7 @@ public:
 	bool LoadTexture(LPTSTR szFileName, GLuint & texid);
 	void CopyTo(Mesh3D *m_pmesh1, Mesh3D *m_pmesh2);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
-	Mesh3D* OnCreateSea(Mesh3D* m_pmesh, float a, float* zLength, float* xLength);
+	Mesh3D* OnCreateSea(Mesh3D* m_pmesh, float a);
 
 	GLuint textureID = 0;
 	float time = 0;
