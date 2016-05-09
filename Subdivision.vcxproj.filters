@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx</Extensions>
+    </Filter>
+    <Filter Include="arcball">
+      <UniqueIdentifier>{2c3beb8d-694b-422b-90f7-db031fe73fca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MeshOperation">
+      <UniqueIdentifier>{351318e9-ff5f-4f3c-92c7-19258e6fa282}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mesh3D">
+      <UniqueIdentifier>{0f32f012-f6ba-4611-8457-74f6b0101e26}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ChildFrm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Subdivision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SubdivisionDoc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SubdivisionView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\arcball\Arcball.cpp">
+      <Filter>arcball</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\arcball\Camera.cpp">
+      <Filter>arcball</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\arcball\Matrix44.cpp">
+      <Filter>arcball</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\arcball\Quaternion.cpp">
+      <Filter>arcball</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\arcball\Vector3d.cpp">
+      <Filter>arcball</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\arcball\Viewport.cpp">
+      <Filter>arcball</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshSubdivision.cpp">
+      <Filter>MeshOperation</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh3D.cpp">
+      <Filter>Mesh3D</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateSea.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ChildFrm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Subdivision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SubdivisionDoc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SubdivisionView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\arcball\Arcball.h">
+      <Filter>arcball</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\arcball\Camera.h">
+      <Filter>arcball</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\arcball\Matrix44.h">
+      <Filter>arcball</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\arcball\Quaternion.h">
+      <Filter>arcball</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\arcball\Vector3d.h">
+      <Filter>arcball</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\arcball\Viewport.h">
+      <Filter>arcball</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshSubdivision.h">
+      <Filter>MeshOperation</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh3D.h">
+      <Filter>Mesh3D</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateSea.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\Subdivision.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\SubdivisionDoc.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Toolbar.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Wave.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Subdivision.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\Subdivision.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="res\Subdivision.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\..\OpenGL\lib\gltools.lib" />
+    <Library Include="..\..\..\OpenGL\lib\freeglut_static.lib" />
+  </ItemGroup>
+</Project>
