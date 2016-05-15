@@ -1021,20 +1021,10 @@ void Mesh3D::gl_draw_wave(float xLength, float yLength, bool smooth)
 
 				glTexCoord2f((edge->vert->x) / xLength + 0.5f, (edge->vert->z) / yLength + 0.5f);
 
-// 				switch (i)
-// 				{
-// 				case 1:glTexCoord2f(0.0, 0.0); break;
-// 				case 2:glTexCoord2f(1.0, 0.0); break;
-// 				case 3:glTexCoord2f(1.0, 1.0); break;
-// 				case 4:glTexCoord2f(0.0, 1.0); break;
-// 				}
-
-
 				glVertex3f(edge->vert->x, edge->vert->y, edge->vert->z);
 
 			}
-
-
+			
 			glEnd();
 		}
 

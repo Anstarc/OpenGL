@@ -1,6 +1,7 @@
 // SubdivisionView.cpp : implementation of the CSubdivisionView class
 //
 
+
 #include "stdafx.h"
 #include "Subdivision.h"
 
@@ -9,11 +10,17 @@
 #include ".\subdivisionview.h"
 
 #include "CreateSea.h"
+//#include <gl/glut.h>
+//#include <gl/gl.h>
+//#include "glew.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
+
+#define GL_SEPARATE_SPECULAR_COLOR 0x81FA
+#define GL_LIGHT_MODEL_COLOR_CONTROL 0x81F8
 
 
 #define PI 3.1415926536
@@ -224,15 +231,23 @@ int CSubdivisionView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		1.0f);
 
 	// lighting
-	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
 	glEnable(GL_LIGHTING);
-	float lpos[4] = { -.2f, .2f, .9797958971f, 0.0f };
-	glLightfv(GL_LIGHT0,GL_POSITION,lpos);
+	GLfloat ambientLight[] = { 0.5f, 0.5f, 0.5f, 1.0f };//白色主光源环境光  
+	GLfloat diffuseLight[] = { 1.0f, 1.0f, 1.0f, 1.0f };//白色主光源漫反射  
+	//GLfloat specularLight[] = { 1.0f, 1.0f, 1.0f, 1.0f };//白色主光源镜面光  
+	float lpos[4] = { 0.0f, 20.0f, 20.0f, 1.0f };
+	glLightfv(GL_LIGHT1, GL_AMBIENT, ambientLight);   //设置环境光源  
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuseLight);   //设置漫反射光源  
+	//glLightfv(GL_LIGHT1, GL_SPECULAR, specularLight); //设置镜面光源  
+	glLightfv(GL_LIGHT1,GL_POSITION,lpos);
 	glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, 1.0f);
+	glEnable(GL_LIGHT1);
+	glLightModeli(GL_LIGHT_MODEL_COLOR_CONTROL, GL_SEPARATE_SPECULAR_COLOR);
 
 	// back material
 	float MatAmbientBack[]  = {0.0f, 1.0f, 0.0f, 1.0f};
-	glMaterialfv(GL_BACK,GL_AMBIENT,MatAmbientBack);
+	//glMaterialfv(GL_BACK,GL_AMBIENT,MatAmbientBack);
 	ChangeMaterial(CString("Gold"),false);
 
 	// init camera
@@ -1388,12 +1403,6 @@ bool CSubdivisionView::LoadTexture(LPTSTR szFileName, GLuint &texid)
 
 
 void CSubdivisionView::OnSea(){
-// 	CSubdivisionDoc *pDoc = (CSubdivisionDoc *)GetDocument();
-// 	if (pDoc->m_pmesh_origin){
-// 		delete pDoc->m_pmesh_origin;
-// 	}
-// 	pDoc->m_pmesh_origin = new Mesh3D;
-// 	CopyTo(pDoc->m_pmesh, pDoc->m_pmesh_origin);
 	LoadTexture(_T("Wave.bmp"), textureID);
 	SetTimer(1, 10, NULL);
 }
@@ -1473,8 +1482,6 @@ void CSubdivisionView::OnTimer(UINT_PTR nIDEvent)
 
 
 			glEnable(GL_LINE_SMOOTH);
-			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
 			glLineWidth(1.5f);
 
@@ -1543,11 +1550,10 @@ void CSubdivisionView::OnTimer(UINT_PTR nIDEvent)
 		//glEnable(GL_CULL_FACE);
 
 		// polygon mode (point, line or fill)
-		glPolygonMode(GL_FRONT_AND_BACK, m_PolygonMode);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 		// set mesh color
-		glColor3f(m_MeshColor[0], m_MeshColor[1], m_MeshColor[2]);
-
+		//glColor3f(m_MeshColor[0], m_MeshColor[1], m_MeshColor[2]);
 
 		glEnable(GL_LINE_SMOOTH);
 		glEnable(GL_BLEND);
@@ -1581,22 +1587,22 @@ void CSubdivisionView::OnTimer(UINT_PTR nIDEvent)
 		// draw the mesh 
 
 		// lighting option
-		//glEnable(GL_LIGHTING);
-		//glDisable(GL_BLEND);
+		glEnable(GL_LIGHTING);
 
+		glDepthMask(GL_FALSE);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glColor4f(1.0f, 1.0f, 1.0f, 0.7f);
 
 		//计算贴图
-		float xLength = 2 * fabs(xWith);
+		float xLength = 2 * fabs(xWith) + 1;
 		float zLength = 2 * fabs(zDepth) + 1;
 		m_pwave->gl_draw_wave(xLength,zLength,m_SmoothShading);
 
+		glDisable(GL_LIGHTING);
 		glDisable(GL_BLEND);
 		glDisable(GL_TEXTURE_2D);
-		//glDisable(GL_LINE_SMOOTH);
-		//glDisable(GL_BLEND);
+		glDepthMask(GL_TRUE);
 
 		glPopMatrix();
 
@@ -1611,8 +1617,6 @@ void CSubdivisionView::OnTimer(UINT_PTR nIDEvent)
 		// release
 		::ReleaseDC(hWnd, hDC);
 	}
-	//CSubdivisionDoc *pDoc = (CSubdivisionDoc *)GetDocument();
-	//pDoc->UpdateAllViews(NULL);
 	CView::OnTimer(nIDEvent);
 }
 
@@ -1626,7 +1630,7 @@ Mesh3D* CSubdivisionView::OnCreateSea(Mesh3D* m_pmesh, float a){
 	std::vector<int>  vert_id_list;
 	VERTEX_LIST  v_list;
 
-	for (x = -xWith; x <= xWith; x += STEP){
+	for (x = xWith; x >- xWith; x -= STEP){
 		vv = m_pmesh->insert_vertex(x, yDepth + sin(a)*0.3, STEP - zDepth);
 		vert_id_list.push_back(vv->id);
 	}
@@ -1634,7 +1638,7 @@ Mesh3D* CSubdivisionView::OnCreateSea(Mesh3D* m_pmesh, float a){
 
 	for (z = -zDepth / 2; z > zDepth; z -= STEP){
 
-		for (float x = -xWith; x <= xWith; x += STEP){
+		for (float x = xWith; x >- xWith; x -= STEP){
 
 			vv = m_pmesh->get_vertex(vert_id_list[0]);
 			vert_id_list.erase(vert_id_list.begin());
@@ -1642,11 +1646,11 @@ Mesh3D* CSubdivisionView::OnCreateSea(Mesh3D* m_pmesh, float a){
 			x = vv->x; y = vv->y; z = vv->z;
 			m_pmesh->insert_vertex(x, y, z);
 			v_list.push_back(vv);
-			vv = m_pmesh->insert_vertex(x + STEP, y, z);
+			vv = m_pmesh->insert_vertex(x - STEP, y, z);
 			v_list.push_back(vv);
 
 			z -= STEP; y = sin(z + a)*0.3 + yDepth;
-			vv = m_pmesh->insert_vertex(x + STEP, y, z);
+			vv = m_pmesh->insert_vertex(x - STEP, y, z);
 			v_list.push_back(vv);
 			vv = m_pmesh->insert_vertex(x, y, z);
 			v_list.push_back(vv);
