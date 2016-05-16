@@ -117,6 +117,22 @@
   <ItemGroup>
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="CreateSea.cpp" />
+    <ClCompile Include="Optimize.cpp" />
+    <ClCompile Include="HLBFGS\HLBFGS.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="HLBFGS\HLBFGS_BLAS.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="HLBFGS\ICFS.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="HLBFGS\LineSearch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="HLBFGS\Lite_Sparse_Matrix.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="lib\arcball\Arcball.cpp" />
     <ClCompile Include="lib\arcball\Camera.cpp" />
     <ClCompile Include="lib\arcball\Matrix44.cpp" />
@@ -137,6 +153,12 @@
   <ItemGroup>
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="CreateSea.h" />
+    <ClInclude Include="HLBFGS\HLBFGS.h" />
+    <ClInclude Include="HLBFGS\HLBFGS_BLAS.h" />
+    <ClInclude Include="HLBFGS\ICFS.h" />
+    <ClInclude Include="HLBFGS\LineSearch.h" />
+    <ClInclude Include="HLBFGS\Lite_Sparse_Matrix.h" />
+    <ClInclude Include="HLBFGS\Sparse_Entry.h" />
     <ClInclude Include="lib\arcball\Arcball.h" />
     <ClInclude Include="lib\arcball\Camera.h" />
     <ClInclude Include="lib\arcball\Matrix44.h" />
@@ -146,6 +168,7 @@
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Mesh3D.h" />
     <ClInclude Include="MeshSubdivision.h" />
+    <ClInclude Include="Optimize.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Subdivision.h" />

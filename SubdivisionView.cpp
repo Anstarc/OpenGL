@@ -236,12 +236,12 @@ int CSubdivisionView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	GLfloat ambientLight[] = { 0.5f, 0.5f, 0.5f, 1.0f };//白色主光源环境光  
 	GLfloat diffuseLight[] = { 1.0f, 1.0f, 1.0f, 1.0f };//白色主光源漫反射  
 	//GLfloat specularLight[] = { 1.0f, 1.0f, 1.0f, 1.0f };//白色主光源镜面光  
-	float lpos[4] = { 0.0f, 20.0f, 20.0f, 1.0f };
+	float lpos[4] = { 0.0f, -20.0f, -20.0f, 1.0f };
 	glLightfv(GL_LIGHT1, GL_AMBIENT, ambientLight);   //设置环境光源  
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuseLight);   //设置漫反射光源  
 	//glLightfv(GL_LIGHT1, GL_SPECULAR, specularLight); //设置镜面光源  
 	glLightfv(GL_LIGHT1,GL_POSITION,lpos);
-	glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, 1.0f);
+	//glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, 1.0f);
 	glEnable(GL_LIGHT1);
 	glLightModeli(GL_LIGHT_MODEL_COLOR_CONTROL, GL_SEPARATE_SPECULAR_COLOR);
 

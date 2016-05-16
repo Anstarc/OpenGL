@@ -47,8 +47,10 @@ public:
 	afx_msg void OnImport();
 	afx_msg void OnExport();
 	afx_msg void OnSubdivisionDoo();
+	afx_msg void OnOptimize();
 	afx_msg void OnSubdivisionCatmull();
 	afx_msg void OnUpdateSubdivisionDoo(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateOptimize(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateSubdivisionCatmull(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateSea(CCmdUI *pCmdUI);////
 	afx_msg void OnOperationNew();

@@ -22,6 +22,9 @@
     <Filter Include="Mesh3D">
       <UniqueIdentifier>{0f32f012-f6ba-4611-8457-74f6b0101e26}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Optimize">
+      <UniqueIdentifier>{b4aa79f2-7636-461f-a1d9-5e19a7db5495}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ChildFrm.cpp">
@@ -68,6 +71,24 @@
     </ClCompile>
     <ClCompile Include="CreateSea.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HLBFGS\HLBFGS.cpp">
+      <Filter>Optimize</Filter>
+    </ClCompile>
+    <ClCompile Include="HLBFGS\HLBFGS_BLAS.cpp">
+      <Filter>Optimize</Filter>
+    </ClCompile>
+    <ClCompile Include="HLBFGS\ICFS.cpp">
+      <Filter>Optimize</Filter>
+    </ClCompile>
+    <ClCompile Include="HLBFGS\LineSearch.cpp">
+      <Filter>Optimize</Filter>
+    </ClCompile>
+    <ClCompile Include="HLBFGS\Lite_Sparse_Matrix.cpp">
+      <Filter>Optimize</Filter>
+    </ClCompile>
+    <ClCompile Include="Optimize.cpp">
+      <Filter>Optimize</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -118,6 +139,27 @@
     </ClInclude>
     <ClInclude Include="CreateSea.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HLBFGS\HLBFGS.h">
+      <Filter>Optimize</Filter>
+    </ClInclude>
+    <ClInclude Include="HLBFGS\HLBFGS_BLAS.h">
+      <Filter>Optimize</Filter>
+    </ClInclude>
+    <ClInclude Include="HLBFGS\ICFS.h">
+      <Filter>Optimize</Filter>
+    </ClInclude>
+    <ClInclude Include="HLBFGS\LineSearch.h">
+      <Filter>Optimize</Filter>
+    </ClInclude>
+    <ClInclude Include="HLBFGS\Lite_Sparse_Matrix.h">
+      <Filter>Optimize</Filter>
+    </ClInclude>
+    <ClInclude Include="HLBFGS\Sparse_Entry.h">
+      <Filter>Optimize</Filter>
+    </ClInclude>
+    <ClInclude Include="Optimize.h">
+      <Filter>Optimize</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

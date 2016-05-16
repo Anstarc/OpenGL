@@ -11,8 +11,6 @@
 #include "MeshSubdivision.h"
 #include "CreateSea.h"
 
-#include "StopWatch.h"
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -26,9 +24,11 @@ BEGIN_MESSAGE_MAP(CSubdivisionDoc, CDocument)
 	ON_COMMAND(ID_IMPORT, OnImport)
 	ON_COMMAND(ID_EXPORT, OnExport)
 	ON_COMMAND(ID_SUBDIVISION_DOO, OnSubdivisionDoo)
+	ON_COMMAND(ID_OPTIMIZE, OnOptimize)
 	ON_COMMAND(ID_SUBDIVISION_CATMULL, OnSubdivisionCatmull)
 	
 	ON_UPDATE_COMMAND_UI(ID_SUBDIVISION_DOO, OnUpdateSubdivisionDoo)
+	ON_UPDATE_COMMAND_UI(ID_OPTIMIZE, OnUpdateOptimize)
 	ON_UPDATE_COMMAND_UI(ID_SUBDIVISION_CATMULL, OnUpdateSubdivisionCatmull)
 	ON_UPDATE_COMMAND_UI(ID_SEA, OnUpdateSea)////
 	ON_COMMAND(ID_OPERATION_NEW, &CSubdivisionDoc::OnOperationNew)
@@ -304,31 +304,19 @@ void CSubdivisionDoc::OnUpdateSea(CCmdUI *pCmdUI){
 }
 
 
+//Optimize
+void CSubdivisionDoc::OnOptimize()
+{
+	// TODO: Add your command handler code here
+	MeshSubdivision m_sub(m_pmesh);
+	m_pmesh = m_sub.Doo_Sabin();
+	UpdateAllViews(NULL);
 
-//void CSubdivisionView::OnTimer(UINT_PTR nIDEvent)
-//{
-//	// TODO:  在此添加消息处理程序代码和/或调用默认值
-//	if (nIDEvent == 1){
-//		CSubdivisionDoc::loop = true;
-//	}
-//
-//
-//	CView::OnTimer(nIDEvent);
-//}
+}
 
-
-// void CSubdivisionDoc::LoopDraw(){
-// 	static CStopWatch Timer;
-// 
-// 	delete m_pmesh;
-// 	CopyTo(m_pmesh_origin, m_pmesh);
-// 
-// 	CreateSea createSea(m_pmesh_origin, Timer.GetElapsedSeconds());
-// 	m_pmesh = createSea.OnCreateSea();
-// 
-// 	UpdateAllViews(NULL);
-// }
-// 
-// void CSubdivisionDoc::ThreadFunc(CSubdivisionDoc* p){
-// 	p->LoopDraw();
-// }
+void CSubdivisionDoc::OnUpdateOptimize(CCmdUI *pCmdUI)
+{
+	// TODO: Add your command update UI handler code here
+	pCmdUI->Enable(m_pmesh && m_pmesh->isvalid());
+	//pCmdUI->Enable(m_pmesh&&m_pmesh->isvalid()&&m_pmesh->isclosed());
+}
