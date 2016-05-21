@@ -1,27 +1,53 @@
 #include "StdAfx.h"
 #include "Optimize.h"
+#include "SubdivisionDoc.h"
+
 
 
 //////////////////////////////////////////////////////////////////////////
-void MeshOptimization::evalfunc(int N, double* x, double *prev_x, double* f, double* g)
+void evalfunc(int N, double* x, double *prev_x, double* f, double* g)
 {
+	UpdateMesh(x);
+
 	*f = 0;
-	for (int i = 0; i < N; i+=2)
+	double product;
+	double edge_x, edge_y, edge_z;
+
+	PTR_VERTEX_LIST vertex_list = m_pmesh->get_vertices_list();
+	VERTEX_ITER     viter = vertex_list->begin();
+
+	for (int i = 0; viter != vertex_list->end(); viter++, i++)
 	{
-		double T1 = 1 - x[i];
-		double T2 = 10*(x[i+1]-x[i]*x[i]);
-		*f += T1*T1+T2*T2;
-		g[i+1]   = 20*T2;
-		g[i] = -2*(x[i]*g[i+1]+T1);
+		HE_edge* t_edge = (*viter)->edge;
+		do 
+		{
+			//对于当前结点指出去的边
+			edge_x = t_edge->vert->x - (*viter)->x;
+			edge_y = t_edge->vert->y - (*viter)->y;
+			edge_z = t_edge->vert->z - (*viter)->z;
+
+			product = edge_x*(*viter)->normal[0] + edge_y*(*viter)->normal[1] + edge_z*(*viter)->normal[2];
+			*f += product*product;
+
+			g[i * 3] = -2 * product*(*viter)->normal[0];
+			g[i * 3 + 1] = -2 * product*(*viter)->normal[1];
+			g[i * 3 + 2] = -2 * product*(*viter)->normal[2];
+
+
+			//对于指向当前结点的边，在此顶点中不做处理
+			t_edge = t_edge->next;
+
+		} while (t_edge!=(*viter)->edge);
+		
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-void MeshOptimization::newiteration(int iter, int call_iter, double *x, double* f, double *g, double* gnorm)
+void newiteration(int iter, int call_iter, double *x, double* f, double *g, double* gnorm)
 {
 	std::cout << iter <<": " << call_iter <<" " << *f <<" " << *gnorm  << std::endl;
 }
 //////////////////////////////////////////////////////////////////////////
-void MeshOptimization::evalfunc_h(int N, double *x, double *prev_x, double *f, double *g, HESSIAN_MATRIX& hessian)
+void evalfunc_h(int N, double *x, double *prev_x, double *f, double *g, HESSIAN_MATRIX& hessian)
 {
 	//the following code is not optimal if the pattern of hessian matrix is fixed.
 	if (m_sparse_matrix)
@@ -51,7 +77,7 @@ void MeshOptimization::evalfunc_h(int N, double *x, double *prev_x, double *f, d
 			g[i] = -2*(x[i]*g[i+1]+T1);
 			diag[i] = 2+1200*tmp-400*x[i+1];
 			diag[i+1] = 200;
-			m_sparse_matrix->fill_entry(i, i+1, -400*x[i]);
+			m_sparse_matrix->fill_entry(i, i + 1, -400 * x[i]);
 		}
 	}
 	else
@@ -60,7 +86,7 @@ void MeshOptimization::evalfunc_h(int N, double *x, double *prev_x, double *f, d
 		{
 			diag[i] = 2+1200*x[i]*x[i]-400*x[i+1];
 			diag[i+1] = 200;
-			m_sparse_matrix->fill_entry(i, i+1, -400*x[i]);
+			m_sparse_matrix->fill_entry(i, i + 1, -400 * x[i]);
 		}
 	}
 
@@ -74,7 +100,7 @@ void MeshOptimization::evalfunc_h(int N, double *x, double *prev_x, double *f, d
 	first = false;
 }
 //////////////////////////////////////////////////////////////////////////
-void MeshOptimization::Optimize_by_HLBFGS(int N, double *init_x, int num_iter, int M, int T, bool with_hessian)
+void Optimize_by_HLBFGS(int N, double *init_x, int num_iter, int M, int T, bool with_hessian)
 {
 	double parameter[20];
 	int info[20];
@@ -86,6 +112,8 @@ void MeshOptimization::Optimize_by_HLBFGS(int N, double *init_x, int num_iter, i
 	info[10] = 0;
 	info[11] = 1;
 
+	//typedef void(*evalfunc)(int N, double* x, double *prev_x, double* f, double* g);
+
 	if (with_hessian)
 	{
 		HLBFGS(N, M, init_x, evalfunc, evalfunc_h, HLBFGS_UPDATE_Hessian, newiteration, parameter, info);
@@ -95,4 +123,19 @@ void MeshOptimization::Optimize_by_HLBFGS(int N, double *init_x, int num_iter, i
 		HLBFGS(N, M, init_x, evalfunc, 0, HLBFGS_UPDATE_Hessian, newiteration, parameter, info);
 	}
 
+}
+//////////////////////////////////////////////////////////////////////////
+void UpdateMesh(double* x)
+{
+	PTR_VERTEX_LIST vertex_list = m_pmesh->get_vertices_list();
+	VERTEX_ITER     viter = vertex_list->begin();
+
+	for (int i = 0; viter != vertex_list->end(); viter++, i++)
+	{
+		(*viter)->x = x[i];
+		(*viter)->y = x[i + 1];
+		(*viter)->z = x[i + 2];
+	}
+
+	m_pmesh->compute_all_normal();
 }

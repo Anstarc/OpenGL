@@ -6,7 +6,6 @@
 
 #include "Mesh3D.h"
 #include "string.h"
-#include "StopWatch.h"
 
 using namespace std;
 
@@ -80,7 +79,6 @@ public:
 
 
 private:
-	CStopWatch timer;
 	float x=0;
 	LPDWORD ThreadId;
 	HANDLE hThread;

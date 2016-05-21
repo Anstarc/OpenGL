@@ -10,6 +10,7 @@
 
 #include "MeshSubdivision.h"
 #include "CreateSea.h"
+#include "Optimize.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -308,8 +309,8 @@ void CSubdivisionDoc::OnUpdateSea(CCmdUI *pCmdUI){
 void CSubdivisionDoc::OnOptimize()
 {
 	// TODO: Add your command handler code here
-	MeshSubdivision m_sub(m_pmesh);
-	m_pmesh = m_sub.Doo_Sabin();
+	Init();
+	//m_pmesh = m_sub.Doo_Sabin();
 	UpdateAllViews(NULL);
 
 }

@@ -11,42 +11,41 @@
 
 #include <iostream>
 
+#include "Mesh3D.h"
+#include "SubdivisionDoc.h"
 
-class MeshOptimization
+
+Lite_Sparse_Matrix* m_sparse_matrix;
+Mesh3D *m_pmesh;
+
+
+void Init();
+void evalfunc(int N, double* x, double *prev_x, double* f, double* g);
+void newiteration(int iter, int call_iter, double *x, double* f, double *g, double* gnorm);
+void evalfunc_h(int N, double *x, double *prev_x, double *f, double *g, HESSIAN_MATRIX& hessian);
+void Optimize_by_HLBFGS(int N, double *init_x, int num_iter, int M, int T, bool with_hessian);
+void UpdateMesh(double* x);
+
+
+
+void Init()
 {
+	m_sparse_matrix=0;
 
-private:
-	Lite_Sparse_Matrix* m_sparse_matrix = 0;
-
-
-public:
-	MeshOptimization();
-	~MeshOptimization();
-
-	void evalfunc(int N, double* x, double *prev_x, double* f, double* g);
-	void newiteration(int iter, int call_iter, double *x, double* f, double *g, double* gnorm);
-	void evalfunc_h(int N, double *x, double *prev_x, double *f, double *g, HESSIAN_MATRIX& hessian);
-	void Optimize_by_HLBFGS(int N, double *init_x, int num_iter, int M, int T, bool with_hessian);
-
-
-
-};
-
-MeshOptimization::MeshOptimization()
-{
 #ifdef _DEBUG
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
 	std::cout.precision(16);
 	std::cout << std::scientific;
 
-	int N = 1000;
+	int N = m_pmesh->get_num_of_vertices_list()*3;
 	std::vector<double> x(N);
 
-	for (int i = 0; i < N / 2; i++)
+	for (int i = 0; i < m_pmesh->get_num_of_vertices_list(); i++)
 	{
-		x[2 * i] = -1.2;
-		x[2 * i + 1] = 1.0;
+		x[i * 3] = m_pmesh->get_vertex(i)->x;
+		x[i * 3 + 1] = m_pmesh->get_vertex(i)->y;
+		x[i * 3 + 2] = m_pmesh->get_vertex(i)->z;
 	}
 
 	int M = 7;
@@ -63,6 +62,3 @@ MeshOptimization::MeshOptimization()
 		delete m_sparse_matrix;
 }
 
-MeshOptimization::~MeshOptimization()
-{
-}
