@@ -169,6 +169,7 @@
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Mesh3D.h" />
     <ClInclude Include="MeshSubdivision.h" />
+    <ClInclude Include="OptimizationParameter.h" />
     <ClInclude Include="Optimize.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -197,10 +198,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="..\..\..\OpenGL\lib\freeglut_static.lib" />
-    <Library Include="..\..\..\OpenGL\lib\gltools.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

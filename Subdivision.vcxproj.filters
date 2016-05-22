@@ -161,6 +161,9 @@
     <ClInclude Include="Optimize.h">
       <Filter>Optimize</Filter>
     </ClInclude>
+    <ClInclude Include="OptimizationParameter.h">
+      <Filter>Optimize</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\Subdivision.ico">
@@ -192,9 +195,5 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="res\Subdivision.manifest" />
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="..\..\..\OpenGL\lib\gltools.lib" />
-    <Library Include="..\..\..\OpenGL\lib\freeglut_static.lib" />
   </ItemGroup>
 </Project>

@@ -280,8 +280,8 @@ void CONJUGATE_GRADIENT_UPDATE(int N, double *q, double *prev_q_update,
 
 //////////////////////////////////////////////////////////////////////////
 void HLBFGS(int N, int M, double *x, void EVALFUNC(int, double*, double*,
-			double*, double*), void EVALFUNC_H(int, double*, double*, double*,
-			double*, HESSIAN_MATRIX&), void USER_DEFINED_HLBFGS_UPDATE_H(int, int,
+	double*, double*), void EVALFUNC_H(int, double*, double*, double*,
+	double*, HESSIAN_MATRIX&), void USER_DEFINED_HLBFGS_UPDATE_H(int, int,
 			double*, double*, double*, int, double*, int[]), void NEWITERATION(int,
 			int, double*, double*, double*, double*), double PARAMETERS[],
 			int INFO[])

@@ -6,6 +6,8 @@
 
 #include "Mesh3D.h"
 #include "string.h"
+#include "Optimize.h"
+#include "OptimizationParameter.h"
 
 using namespace std;
 
@@ -19,6 +21,7 @@ protected: // create from serialization only
 public:
 	Mesh3D* m_pmesh;
 	Mesh3D* m_pmesh_origin;
+
 // Operations
 public:
 
@@ -87,6 +90,7 @@ public:
 	static bool loop;
 	void LoopDraw();
 	static void ThreadFunc(CSubdivisionDoc* p);
+
 };
 
 
