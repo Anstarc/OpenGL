@@ -10,6 +10,8 @@
 
 #include "MeshSubdivision.h"
 #include "CreateSea.h"
+#include "Optimize.h"
+#include "OptimizationParameter.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

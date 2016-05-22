@@ -98,6 +98,7 @@
       <SDLCheck>false</SDLCheck>
       <BufferSecurityCheck>
       </BufferSecurityCheck>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -113,10 +114,14 @@
       <DataExecutionPrevention />
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="CreateSea.cpp" />
+    <ClCompile Include="OptimizationParameter.cpp" />
     <ClCompile Include="Optimize.cpp" />
     <ClCompile Include="HLBFGS\HLBFGS.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>

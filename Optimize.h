@@ -13,12 +13,10 @@
 #include "OptimizationParameter.h"
 
 
-static class MeshOptimization
+class MeshOptimization
 {
 
 public:
-	MeshOptimization();
-	~MeshOptimization();
 
 	static void Optimize_by_HLBFGS(int N, double *init_x, int num_iter, int M, int T, bool with_hessian);
 	static void Init();
@@ -29,16 +27,3 @@ public:
 
 	static OptimizeParameter* opp;
 };
-
-
-MeshOptimization::MeshOptimization(){}
-
-
-MeshOptimization::~MeshOptimization()
-{
-	if (opp)
-	{
-		delete opp;
-	}
-}
-

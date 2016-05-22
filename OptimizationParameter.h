@@ -17,15 +17,6 @@ public:
 	~OptimizeParameter();
 
 	Lite_Sparse_Matrix* m_sparse_matrix;
-	Mesh3D *m_pmesh;
+	Mesh3D *mm_pmesh;
 
 };
-
-OptimizeParameter::OptimizeParameter(Mesh3D* m) :m_pmesh(m)
-{
-	m_sparse_matrix = 0;
-}
-
-OptimizeParameter::~OptimizeParameter()
-{
-}

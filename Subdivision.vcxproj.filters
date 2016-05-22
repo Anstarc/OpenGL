@@ -90,6 +90,9 @@
     <ClCompile Include="Optimize.cpp">
       <Filter>Optimize</Filter>
     </ClCompile>
+    <ClCompile Include="OptimizationParameter.cpp">
+      <Filter>Optimize</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChildFrm.h">

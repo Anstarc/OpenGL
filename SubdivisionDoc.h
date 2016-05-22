@@ -6,8 +6,6 @@
 
 #include "Mesh3D.h"
 #include "string.h"
-#include "Optimize.h"
-#include "OptimizationParameter.h"
 
 using namespace std;
 
