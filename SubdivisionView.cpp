@@ -1665,4 +1665,6 @@ Mesh3D* CSubdivisionView::OnCreateSea(Mesh3D* m_pmesh, float a){
 	}
 	vert_id_list.clear();
 	m_pmesh->update_mesh();
+
+	return m_pmesh;
 }

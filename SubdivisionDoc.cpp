@@ -313,7 +313,7 @@ void CSubdivisionDoc::OnOptimize()
 	OptimizeParameter *opp=new OptimizeParameter(m_pmesh);
 	MeshOptimization::opp = opp;
 	MeshOptimization::Init();
-	//m_pmesh = m_sub.Doo_Sabin();
+	delete opp;
 	UpdateAllViews(NULL);
 
 }

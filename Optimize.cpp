@@ -11,9 +11,12 @@ void MeshOptimization::UpdateMesh(double* x)
 
 	for (int i = 0; viter != vertex_list->end(); viter++, i++)
 	{
-		(*viter)->x = x[i];
-		(*viter)->y = x[i + 1];
-		(*viter)->z = x[i + 2];
+		opp->mm_pmesh->get_vertex(i)->x = x[i * 3];
+		opp->mm_pmesh->get_vertex(i)->y = x[i * 3+1];
+		opp->mm_pmesh->get_vertex(i)->z = x[i * 3+2];
+// 		(*viter)->x = x[(*viter)->id * 3];
+// 		(*viter)->y = x[(*viter)->id * 3 + 1];
+// 		(*viter)->z = x[(*viter)->id * 3 + 2];
 	}
 
 	opp->mm_pmesh->compute_all_normal();
@@ -31,7 +34,7 @@ void MeshOptimization::evalfunc(int N, double* x, double *prev_x, double* f, dou
 	PTR_VERTEX_LIST vertex_list = opp->mm_pmesh->get_vertices_list();
 	VERTEX_ITER     viter = vertex_list->begin();
 
-	for (int i = 0; viter != vertex_list->end(); viter++, i++)
+	for (; viter != vertex_list->end(); viter++)
 	{
 		HE_edge* t_edge = (*viter)->edge;
 		do 
@@ -44,10 +47,11 @@ void MeshOptimization::evalfunc(int N, double* x, double *prev_x, double* f, dou
 			product = edge_x*(*viter)->normal[0] + edge_y*(*viter)->normal[1] + edge_z*(*viter)->normal[2];
 			*f += product*product;
 
-			g[i * 3] = -2 * product*(*viter)->normal[0];
-			g[i * 3 + 1] = -2 * product*(*viter)->normal[1];
-			g[i * 3 + 2] = -2 * product*(*viter)->normal[2];
+			g[(*viter)->id * 3] += -2 * product*(*viter)->normal[0];
+			g[(*viter)->id * 3 + 1] += -2 * product*(*viter)->normal[1];
+			g[(*viter)->id * 3 + 2] += -2 * product*(*viter)->normal[2];
 
+			//TRACE("导数%d :%f\n", (*viter)->id * 3, g[(*viter)->id * 3]);
 
 			//对于指向当前结点的边，在此顶点中不做处理
 			t_edge = t_edge->next;
@@ -60,6 +64,11 @@ void MeshOptimization::evalfunc(int N, double* x, double *prev_x, double* f, dou
 void MeshOptimization::newiteration(int iter, int call_iter, double *x, double* f, double *g, double* gnorm)
 {
 	std::cout << iter <<": " << call_iter <<" " << *f <<" " << *gnorm  << std::endl;
+	TRACE("########################\n");
+	TRACE("迭代次数:%d\n", iter);
+	TRACE("函数调用次数:%d\n", call_iter);
+	TRACE("F(x):%f\n", *f);
+	TRACE("dF(x):%f\n", *g);
 }
 //////////////////////////////////////////////////////////////////////////
 void MeshOptimization::evalfunc_h(int N, double *x, double *prev_x, double *f, double *g, HESSIAN_MATRIX& hessian)
@@ -122,10 +131,11 @@ void MeshOptimization::Optimize_by_HLBFGS(int N, double *init_x, int num_iter, i
 	//initialize
 	INIT_HLBFGS(parameter, info);
 	info[4] = num_iter;
+	info[5] = 1;
 	info[6] = T;
 	info[7] = with_hessian ? 1 : 0;
 	info[10] = 0;
-	info[11] = 1;
+	//info[11] = 1;
 
 	if (with_hessian)
 	{
@@ -150,12 +160,20 @@ void MeshOptimization::Init()
 	int N = opp->mm_pmesh->get_num_of_vertices_list() * 3;
 	std::vector<double> x(N);
 
-	for (int i = 0; i < opp->mm_pmesh->get_num_of_vertices_list(); i++)
+
+	PTR_VERTEX_LIST vertex_list = opp->mm_pmesh->get_vertices_list();
+	VERTEX_ITER     viter = vertex_list->begin();
+
+	for (int i=0; viter != vertex_list->end(); viter++,i++)
 	{
 		x[i * 3] = opp->mm_pmesh->get_vertex(i)->x;
 		x[i * 3 + 1] = opp->mm_pmesh->get_vertex(i)->y;
-		x[i * 3 + 2] = opp->mm_pmesh->get_vertex(i)->z;
+		x[i * 3+2] = opp->mm_pmesh->get_vertex(i)->z;
+// 		x[(*viter)->id * 3] = (*viter)->x;
+// 		x[(*viter)->id * 3 + 1] = (*viter)->y;
+// 		x[(*viter)->id * 3 + 2] = (*viter)->z;
 	}
+
 
 	int M = 7;
 	int T = 0;
